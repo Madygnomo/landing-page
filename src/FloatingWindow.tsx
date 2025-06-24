@@ -31,8 +31,8 @@ interface FloatingWindowsProps {
 
 export function FloatingWindows({ onShowCine }: FloatingWindowsProps) {
   // Animación pop-in y parpadeo para IG
-  const [scaleIG, setScaleIG] = useState(0.5);
-  const [blinkIG, setBlinkIG] = useState(0);
+  const [, setScaleIG] = useState(0.5);
+  const [, setBlinkIG] = useState(0);
   useEffect(() => {
     setTimeout(() => setScaleIG(1), 200);
     let mounted = true, t = 0;
@@ -47,8 +47,8 @@ export function FloatingWindows({ onShowCine }: FloatingWindowsProps) {
   }, []);
 
   // Pop-in y parpadeo para Virus
-  const [scaleVirus, setScaleVirus] = useState(0.5);
-  const [blinkVirus, setBlinkVirus] = useState(0);
+  const [, setScaleVirus] = useState(0.5);
+  const [, setBlinkVirus] = useState(0);
   useEffect(() => {
     setTimeout(() => setScaleVirus(1), 400);
     let mounted = true, t = 0;

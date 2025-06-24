@@ -44,7 +44,7 @@ export default function App(): React.JSX.Element {
   });
 
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const [modelScale, setModelScale] = useState(3);
+  const [, setModelScale] = useState(3);
 
   const { intensity, highlight } = useControls({
     'Environment Settings': folder({
