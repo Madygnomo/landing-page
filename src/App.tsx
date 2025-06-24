@@ -87,7 +87,7 @@ export default function App(): React.JSX.Element {
 
   return (
     <>
-      <Leva collapsed hidden={false} />
+      <Leva hidden />
       <Canvas 
         shadows 
         camera={{ position: [0, 2, 10], fov: 50 }}
@@ -106,7 +106,7 @@ export default function App(): React.JSX.Element {
           azimuth={[-1, 0.75]}
           snap
         >
-        <group position={[13, -19, -70]}>
+        <group position={[9, -19, -70]}>
             <Center>
               <BottleWater />
               <OldMonitor />
