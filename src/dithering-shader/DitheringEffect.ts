@@ -66,7 +66,7 @@ export class DitheringEffect extends Effect {
    * @param deltaTime - Time elapsed since the last frame
    */
   update(
-    renderer: THREE.WebGLRenderer,
+    _renderer: THREE.WebGLRenderer,
     inputBuffer: THREE.WebGLRenderTarget,
     deltaTime: number
   ): void {
@@ -90,12 +90,12 @@ export class DitheringEffect extends Effect {
    * Performs initialization tasks
    * @param renderer - The WebGL renderer
    * @param alpha - Whether the renderer uses the alpha channel
-   * @param frameBufferType - The type of the main frame buffers
+   * @param _frameBufferType - The type of the main frame buffers
    */
   initialize(
-    renderer: THREE.WebGLRenderer,
-    alpha: boolean,
-    frameBufferType: number
+    _renderer: THREE.WebGLRenderer,
+    _alpha: boolean,
+    _frameBufferType: number
   ): void {
     // No special initialization required for this effect
   }
