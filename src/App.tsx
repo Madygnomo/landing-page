@@ -89,6 +89,7 @@ export default function App(): React.JSX.Element {
     <>
       <Leva hidden />
       <Canvas 
+        style={{ touchAction: 'none' }}
         shadows 
         camera={{ position: [0, 2, 10], fov: 50 }}
         gl={{ 
@@ -100,11 +101,11 @@ export default function App(): React.JSX.Element {
         }}
       >
          <PresentationControls
-          global
+          global={true}
+          snap={true}
           rotation={[0.13, 0.1, 0]}
           polar={[-0.4, 0.2]}
           azimuth={[-1, 0.75]}
-          snap
         >
         <group position={[9, -19, -70]}>
             <Center>
