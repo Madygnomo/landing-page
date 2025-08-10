@@ -91,7 +91,7 @@ export default function App(): React.JSX.Element {
       <Canvas 
         style={{ touchAction: 'none' }}
         shadows 
-        camera={{ position: [0, 2, 10], fov: 50 }}
+        camera={{ position: [0, -14, 10], fov: 50 }}
         gl={{ 
           alpha: false 
         }}
@@ -107,7 +107,7 @@ export default function App(): React.JSX.Element {
           polar={[-0.4, 0.2]}
           azimuth={[-1, 0.75]}
         >
-        <group position={[9, -19, -70]}>
+        <group position={[9, -35, -120]}>
             <Center>
               <BottleWater />
               <OldMonitor />
@@ -125,6 +125,7 @@ export default function App(): React.JSX.Element {
         <EnvironmentWrapper intensity={intensity} highlight={highlight} />
         <Effects />
         <RaycastLayers />
+        <GyroCameraControl />
       </Canvas>
       {/* Modal/cine overlay: va FUERA del Canvas */}
       {showCine && (
@@ -328,6 +329,29 @@ function OldKeys(props: OldKeysProps): React.JSX.Element {
       />
     </group>
   )
+}
+
+function GyroCameraControl() {
+  const { camera } = useThree();
+
+  useEffect(() => {
+    function handleOrientation(event: DeviceOrientationEvent) {
+      // Solo eje Y (izquierda-derecha), sensibilidad baja
+      const gamma = event.gamma ?? 0; // [-90, 90]
+      // Limita el rango y reduce la sensibilidad
+      const maxAngle = 120; // grados máximos permitidos
+      const limitedGamma = Math.max(-maxAngle, Math.min(maxAngle, gamma));
+      camera.rotation.y = THREE.MathUtils.degToRad(limitedGamma * 0.5); // sensibilidad baja
+      // Bloquea X y Z
+      camera.rotation.x = 0;
+      camera.rotation.z = 0;
+    }
+
+    window.addEventListener('deviceorientation', handleOrientation, true);
+    return () => window.removeEventListener('deviceorientation', handleOrientation);
+  }, [camera]);
+
+  return null;
 }
 
 function RaycastLayers() {

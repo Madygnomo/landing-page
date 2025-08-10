@@ -71,6 +71,19 @@ export function FloatingWindows({ onShowCine }: FloatingWindowsProps) {
           distanceFactor={70}
           transform
         >
+          <div style={{ textAlign: 'center', marginBottom: 8 }}>
+            <span
+              style={{
+                fontFamily: 'OptimusPrinceps, sans-serif',
+                fontSize: 36,
+                color: '#222',
+                letterSpacing: 1,
+                textShadow: '0 1px 6px #fff',
+              }}
+            >
+              Instagram
+            </span>
+          </div>
           <a
             href="https://www.instagram.com/mady.gnome/"
             target="_blank"
@@ -80,7 +93,7 @@ export function FloatingWindows({ onShowCine }: FloatingWindowsProps) {
               background: 'rgba(255,255,255,0.9)',
               width: 180,
               pointerEvents: 'auto',
-              ...useGlitch(1.1), // Aplica el glitch aquí
+              ...useGlitch(1.1),
               transition: 'box-shadow 0.22s cubic-bezier(.25,1,.5,1)'
             }}
             onMouseOver={() => document.body.style.cursor = 'pointer'}
@@ -98,12 +111,25 @@ export function FloatingWindows({ onShowCine }: FloatingWindowsProps) {
           distanceFactor={60}
           transform
         >
+          <div style={{ textAlign: 'center', marginBottom: 8 }}>
+            <span
+              style={{
+                fontFamily: 'OptimusPrinceps, sans-serif',
+                fontSize: 36,
+                color: '#222',
+                letterSpacing: 1,
+                textShadow: '0 1px 6px #fff',
+              }}
+            >
+              About Me
+            </span>
+          </div>
           <div
             style={{
               background: 'rgba(255,255,255,0.96)',
               borderRadius: 10,
               width: 210,
-              ...useGlitch(1.1), // Aquí el glitch!
+              ...useGlitch(1.1),
               transition: 'box-shadow 0.22s cubic-bezier(.25,1,.5,1)'
             }}
           >
@@ -114,13 +140,26 @@ export function FloatingWindows({ onShowCine }: FloatingWindowsProps) {
 
       {/* Windows Media Player Popup */}
 
-      <group position={[16, 1, -20]} rotation={[0, -Math.PI / 18, 0]}>
+      <group position={[16, 1, -50]} rotation={[0, -Math.PI / 18, 0]}>
         <Html
           position={[50, -7, 0]}
           distanceFactor={63}
           
           transform
         >
+          <div style={{ textAlign: 'center', marginBottom: 8 }}>
+            <span
+              style={{
+                fontFamily: 'OptimusPrinceps, sans-serif',
+                fontSize: 36,
+                color: '#222',
+                letterSpacing: 1,
+                textShadow: '0 1px 6px #fff',
+              }}
+            >
+              Reel
+            </span>
+          </div>
           <div
             onClick={onShowCine}
             style={{
