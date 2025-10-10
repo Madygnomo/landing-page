@@ -174,7 +174,7 @@ export default function App(): React.JSX.Element {
           polar={[0, 0.2]}
           azimuth={[-1, 0.75]}
         >
-        <group position={[0, 0, -1]} scale={0.2}>
+        <group position={[0, 2, -1]} scale={0.2}>
             <Center>
               <BottleWater />
               <OldMonitor />
@@ -412,7 +412,7 @@ function GyroCameraControl({ enabled }: { enabled: boolean }) {
 
     function handleOrientation(event: DeviceOrientationEvent) {
       const gamma = event.gamma ?? 0;
-      const maxAngle = 30; // Reducido para un movimiento más sutil
+      const maxAngle = 60; // Reducido para un movimiento más sutil
       const limitedGamma = Math.max(-maxAngle, Math.min(maxAngle, gamma));
       camera.rotation.y = THREE.MathUtils.degToRad(limitedGamma * 0.3); // Sensibilidad reducida
       camera.rotation.x = 0;
