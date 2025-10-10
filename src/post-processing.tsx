@@ -78,35 +78,43 @@ export const PostProcessing = () => {
     if (!scene || !camera || !composerRef.current) return;
 
     const composer = composerRef.current;
-    composer.removeAllPasses();
+    // Remove old passes safely
+    try {
+      composer.removeAllPasses();
 
-    // Add required passes in order
-    const renderPass = new RenderPass(scene, camera);
-    composer.addPass(renderPass);
+      // Add required passes in order
+      const renderPass = new RenderPass(scene, camera);
+      composer.addPass(renderPass);
 
-    if (bloom1Enabled) {
-      composer.addPass(new EffectPass(camera, new BloomEffect({
-        luminanceThreshold: bloom1Threshold,
-        intensity: bloom1Intensity,
-        radius: bloom1Radius,
-        mipmapBlur: true,
+      if (bloom1Enabled) {
+        composer.addPass(new EffectPass(camera, new BloomEffect({
+          luminanceThreshold: bloom1Threshold,
+          intensity: bloom1Intensity,
+          radius: bloom1Radius,
+          mipmapBlur: true,
+        })));
+      }
+
+      // Dithering effect - always active
+      composer.addPass(new EffectPass(camera, new DitheringEffect({
+        gridSize: ditheringGridSize,
+        pixelSizeRatio,
+        grayscaleOnly
       })));
-    }
 
-    // Dithering effect - always active
-    composer.addPass(new EffectPass(camera, new DitheringEffect({
-      gridSize: ditheringGridSize,
-      pixelSizeRatio,
-      grayscaleOnly
-    })));
-
-    if (bloom2Enabled) {
-      composer.addPass(new EffectPass(camera, new BloomEffect({
-        luminanceThreshold: bloom2Threshold,
-        intensity: bloom2Intensity,
-        luminanceSmoothing: bloom2Smoothing,
-        radius: bloom2Radius,
-      })));
+      if (bloom2Enabled) {
+        composer.addPass(new EffectPass(camera, new BloomEffect({
+          luminanceThreshold: bloom2Threshold,
+          intensity: bloom2Intensity,
+          luminanceSmoothing: bloom2Smoothing,
+          radius: bloom2Radius,
+        })));
+      }
+    } catch (err) {
+      // If composer or any effect fails to initialize (some drivers/browsers), log and keep composer in a degraded state
+      // The runtime render loop below will fallback to direct rendering if composer is unusable.
+      // eslint-disable-next-line no-console
+      console.error('PostProcessing initialization failed:', err);
     }
 
   }, [
@@ -145,12 +153,18 @@ export const PostProcessing = () => {
     if (composerRef.current && currentScene && currentCamera) {
       const composer = composerRef.current;
       const originalAutoClear = gl.autoClear;
-      // Es crucial usar currentCamera de useFrame para la manipulación de capas durante este ciclo de renderizado.
       const originalCameraLayersMask = currentCamera.layers.mask;
 
       // 1. Renderizar la capa 0 (escena principal) con post-procesamiento
       currentCamera.layers.set(0); // La cámara solo ve la capa 0
-      composer.render(delta);      // El composer renderiza la capa 0 con efectos (usa la escena/cámara con la que fue configurado)
+      try {
+        composer.render(delta);      // El composer renderiza la capa 0 con efectos (usa la escena/cámara con la que fue configurado)
+      } catch (err) {
+        // Si composer falla durante render, hacer fallback a render directo
+        // eslint-disable-next-line no-console
+        console.error('Composer render failed, falling back to direct rendering:', err);
+        gl.render(currentScene, currentCamera);
+      }
 
       // 2. Renderizar la capa 1 (FloatingWindow) sin post-procesamiento, encima
       gl.autoClear = false;    // No limpiar lo que dibujó el composer

@@ -1,4 +1,5 @@
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
+import { AboutMe } from './aboutMe';
 import type { FC } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { Center, useGLTF, PresentationControls } from '@react-three/drei';
@@ -83,6 +84,7 @@ function GyroPermissionButton({ onGranted }: { onGranted: () => void }) {
  */
 export default function App(): React.JSX.Element {
   const [showCine, setShowCine] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
   const [isGyroEnabled, setGyroEnabled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -156,7 +158,7 @@ export default function App(): React.JSX.Element {
       <Canvas 
         style={{ touchAction: 'none' }}
         shadows 
-        camera={{ position: [0, -14, 10], fov: 50 }}
+        camera={{ position: [0, 4, 20], fov: 50 }}
         gl={{ 
           alpha: false 
         }}
@@ -168,11 +170,11 @@ export default function App(): React.JSX.Element {
          <PresentationControls
           global={true}
           snap={true}
-          rotation={[0.13, 0.1, 0]}
-          polar={[-0.4, 0.2]}
+          rotation={[0, 0, 0]}
+          polar={[0, 0.2]}
           azimuth={[-1, 0.75]}
         >
-        <group position={[9, -35, -120]}>
+        <group position={[0, 0, -1]} scale={0.2}>
             <Center>
               <BottleWater />
               <OldMonitor />
@@ -181,8 +183,11 @@ export default function App(): React.JSX.Element {
               <OldKeyboard />
               <OldMouse />
               <OldKeys />
-              {!showCine && (
-                <FloatingWindows onShowCine={() => setShowCine(true)} />
+              {!showCine && !showAbout && (
+                <FloatingWindows 
+                  onShowCine={() => setShowCine(true)} 
+                  onShowAbout={() => setShowAbout(true)}
+                />
              )}
             </Center>
         </group>
@@ -246,6 +251,7 @@ export default function App(): React.JSX.Element {
             </button>
           </div>
       )}
+     {showAbout && <AboutMe onClose={() => setShowAbout(false)} />}
       <DemoName />
     </>
   )
@@ -427,5 +433,4 @@ function RaycastLayers() {
   }, [raycaster]);
   return null;
 }
-
 

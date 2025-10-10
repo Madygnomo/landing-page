@@ -27,9 +27,10 @@ function useGlitch(intensity = 1) {
 
 interface FloatingWindowsProps {
   onShowCine: () => void;
+  onShowAbout: () => void;
 }
 
-export function FloatingWindows({ onShowCine }: FloatingWindowsProps) {
+export function FloatingWindows({ onShowCine, onShowAbout }: FloatingWindowsProps) {
   // Animación pop-in y parpadeo para IG
   const [, setScaleIG] = useState(0.5);
   const [, setBlinkIG] = useState(0);
@@ -125,12 +126,14 @@ export function FloatingWindows({ onShowCine }: FloatingWindowsProps) {
             </span>
           </div>
           <div
+            onClick={onShowAbout}
             style={{
               background: 'rgba(255,255,255,0.96)',
               borderRadius: 10,
               width: 210,
               ...useGlitch(1.1),
-              transition: 'box-shadow 0.22s cubic-bezier(.25,1,.5,1)'
+              transition: 'box-shadow 0.22s cubic-bezier(.25,1,.5,1)',
+              cursor: 'pointer'
             }}
           >
             <img src="/textures/Virus_Windows.jpg" style={{ width: '100%', borderRadius: 8 }} alt="Virus Popup" />
