@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
-import { AboutMe } from './aboutMe';
+import { AboutMe } from './AboutMe';
 import type { FC } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { Center, useGLTF, PresentationControls } from '@react-three/drei';
