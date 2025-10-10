@@ -30,10 +30,62 @@ useGLTF.preload("/OldPC_Keyboard.glb");
 useGLTF.preload("/OldPC_Mouse.glb");
 
 /**
+ * Componente para solicitar permiso de giroscopio en iOS.
+ */
+function GyroPermissionButton({ onGranted }: { onGranted: () => void }) {
+  // Esta función comprueba si la API de permisos existe y la llama.
+  const requestPermission = async () => {
+    // La API solo existe en iOS Safari 13+
+    const requestPermissionFunc = (DeviceOrientationEvent as any).requestPermission;
+    if (typeof requestPermissionFunc === 'function') {
+      try {
+        const result = await requestPermissionFunc();
+        if (result === 'granted') {
+          onGranted(); // Llama al callback si se concede el permiso
+        } else {
+          alert('Permiso para el giroscopio denegado. La cámara no se moverá con el dispositivo.');
+        }
+      } catch (error) {
+        console.error('Error al solicitar permiso para el giroscopio:', error);
+      }
+    } else {
+      // Si la API no existe (Android, Desktop), asumimos que está permitido.
+      onGranted();
+    }
+  };
+
+  return (
+    <button
+      onClick={requestPermission}
+      style={{
+        position: 'fixed',
+        bottom: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 100000,
+        padding: '12px 24px',
+        fontSize: '16px',
+        background: 'rgba(0, 0, 0, 0.7)',
+        color: 'white',
+        border: '1px solid white',
+        borderRadius: '30px',
+        cursor: 'pointer',
+      }}
+    >
+      Activar Giroscopio
+    </button>
+  );
+}
+
+
+/**
  * Main application component
  */
 export default function App(): React.JSX.Element {
   const [showCine, setShowCine] = useState(false);
+  const [isGyroEnabled, setGyroEnabled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   const { bgColor } = useControls({
     'Scene Settings': folder({
       bgColor: {
@@ -85,8 +137,21 @@ export default function App(): React.JSX.Element {
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
 
+  // Detectar si es un dispositivo móvil
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <>
+      {/* Muestra el botón de permiso solo en móvil y si aún no está habilitado */}
+      {isMobile && !isGyroEnabled && (
+        <GyroPermissionButton onGranted={() => setGyroEnabled(true)} />
+      )}
+
       <Leva hidden />
       <Canvas 
         style={{ touchAction: 'none' }}
@@ -125,7 +190,8 @@ export default function App(): React.JSX.Element {
         <EnvironmentWrapper intensity={intensity} highlight={highlight} />
         <Effects />
         <RaycastLayers />
-        <GyroCameraControl />
+        {/* Pasa el estado de habilitado al control del giroscopio */}
+        {isMobile && <GyroCameraControl enabled={isGyroEnabled} />}
       </Canvas>
       {/* Modal/cine overlay: va FUERA del Canvas */}
       {showCine && (
@@ -331,25 +397,25 @@ function OldKeys(props: OldKeysProps): React.JSX.Element {
   )
 }
 
-function GyroCameraControl() {
+function GyroCameraControl({ enabled }: { enabled: boolean }) {
   const { camera } = useThree();
 
   useEffect(() => {
+    // Si no está habilitado, no hace nada.
+    if (!enabled) return;
+
     function handleOrientation(event: DeviceOrientationEvent) {
-      // Solo eje Y (izquierda-derecha), sensibilidad baja
-      const gamma = event.gamma ?? 0; // [-90, 90]
-      // Limita el rango y reduce la sensibilidad
-      const maxAngle = 120; // grados máximos permitidos
+      const gamma = event.gamma ?? 0;
+      const maxAngle = 30; // Reducido para un movimiento más sutil
       const limitedGamma = Math.max(-maxAngle, Math.min(maxAngle, gamma));
-      camera.rotation.y = THREE.MathUtils.degToRad(limitedGamma * 0.5); // sensibilidad baja
-      // Bloquea X y Z
+      camera.rotation.y = THREE.MathUtils.degToRad(limitedGamma * 0.3); // Sensibilidad reducida
       camera.rotation.x = 0;
       camera.rotation.z = 0;
     }
 
     window.addEventListener('deviceorientation', handleOrientation, true);
     return () => window.removeEventListener('deviceorientation', handleOrientation);
-  }, [camera]);
+  }, [camera, enabled]); // Se vuelve a ejecutar si 'enabled' cambia
 
   return null;
 }
