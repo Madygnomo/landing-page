@@ -1,7 +1,8 @@
-import { memo, useEffect, useRef, useState, useCallback } from 'react';
+import { memo, useEffect, useRef, useState, useCallback, useLayoutEffect } from 'react';
 import { AboutMe } from './AboutMe';
 import type { FC } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
+import gsap from 'gsap';
 import { Center, useGLTF, PresentationControls } from '@react-three/drei';
 import { PostProcessing } from './post-processing';
 import { EnvironmentWrapper } from './environment';
@@ -9,6 +10,7 @@ import * as THREE from 'three';
 import { useControls, folder, Leva } from 'leva';
 import './index.css';
 import { FloatingWindows } from './FloatingWindow';
+import { PCExplorer } from './PCExplorer';
 
 const DemoName: FC = () => (
   <div className="demo-container">
@@ -87,6 +89,7 @@ export default function App(): React.JSX.Element {
   const [showAbout, setShowAbout] = useState(false);
   const [isGyroEnabled, setGyroEnabled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isExploringPC, setExploringPC] = useState(false);
 
   const { bgColor } = useControls({
     'Scene Settings': folder({
@@ -167,34 +170,39 @@ export default function App(): React.JSX.Element {
           gl.setClearColor(new THREE.Color(bgColor));
         }}
       >
-         <PresentationControls
-          global={true}
-          snap={true}
-          rotation={[0, 0, 0]}
-          polar={[0, 0.2]}
-          azimuth={[-1, 0.75]}
-        >
-        <group position={[0, 2, -1]} scale={0.2}>
-            <Center>
-              <BottleWater />
-              <OldMonitor />
-              <OldGabinetFront />
-              <OldGabinetBack />
-              <OldKeyboard />
-              <OldMouse />
-              <OldKeys />
-              {!showCine && !showAbout && (
-                <FloatingWindows 
-                  onShowCine={() => setShowCine(true)} 
-                  onShowAbout={() => setShowAbout(true)}
-                />
-             )}
-            </Center>
-        </group>
-        </PresentationControls>
+         {!isExploringPC && (
+          <>
+            <PresentationControls
+              global={true}
+              snap={true}
+              rotation={[0, 0, 0]}
+              polar={[0, 0.2]}
+              azimuth={[-1, 0.75]}
+            >
+              <group position={[1, 2, -1]} scale={0.2}>
+                <Center>
+                  <BottleWater />
+                  <OldMonitor onClick={() => setExploringPC(true)} />
+                  <OldGabinetFront />
+                  <OldGabinetBack />
+                  <OldKeyboard />
+                  <OldMouse />
+                  <OldKeys />
+                  {!showCine && !showAbout && (
+                    <FloatingWindows 
+                      onShowCine={() => setShowCine(true)} 
+                      onShowAbout={() => setShowAbout(true)}
+                    />
+                 )}
+                </Center>
+              </group>
+            </PresentationControls>
+          </>
+         )}
         <EnvironmentWrapper intensity={intensity} highlight={highlight} />
         <Effects />
         <RaycastLayers />
+        <CameraController isExploring={isExploringPC} />
         {/* Pasa el estado de habilitado al control del giroscopio */}
         {isMobile && <GyroCameraControl enabled={isGyroEnabled} />}
       </Canvas>
@@ -252,6 +260,7 @@ export default function App(): React.JSX.Element {
           </div>
       )}
      {showAbout && <AboutMe onClose={() => setShowAbout(false)} />}
+     {isExploringPC && <PCExplorer onClose={() => setExploringPC(false)} />}
       <DemoName />
     </>
   )
@@ -270,6 +279,7 @@ interface BottleWaterProps {
 }
 
 interface OldMonitorProps {
+  onClick?: () => void;
   [key: string]: any;
 }
 interface OldGabinetFrontProps {
@@ -314,9 +324,18 @@ function OldMonitor(props: OldMonitorProps): React.JSX.Element {
         geometry={nodes.C_monitor01_low_Udim02_pc002_0.geometry}
         material={materials.Udim02_pc002}
         material-roughness={0.15}
+        material-opacity={1}
+        material-transparent={true}
         position={[9.5, -0.9, 22.428]}
         rotation={[0, 0, 0]}
         scale={1}
+        renderOrder={-1}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (props.onClick) props.onClick();
+        }}
+        onPointerOver={() => document.body.style.cursor = 'pointer'}
+        onPointerOut={() => document.body.style.cursor = 'default'}
       />
     </group>
   )
@@ -401,6 +420,34 @@ function OldKeys(props: OldKeysProps): React.JSX.Element {
       />
     </group>
   )
+}
+
+function CameraController({ isExploring }: { isExploring: boolean }) {
+  const { camera } = useThree();
+
+  useLayoutEffect(() => {
+    if (isExploring) {
+      // Animación de "entrada"
+      gsap.to(camera.position, {
+        duration: 2, // 2 segundos de animación
+        x: 2,   // Coordenada X del monitor
+        y: 5,     // Coordenada Y para centrar la vista
+        z: 20,    // Coordenada Z para estar justo frente a la pantalla
+        ease: "power3.inOut",
+      });
+      // También puedes animar hacia dónde mira la cámara si es necesario
+      // gsap.to(camera.rotation, { ... });
+    } else {
+      // Animación de "salida" para volver a la vista original
+      gsap.to(camera.position, {
+        duration: 2,
+        x: 0, y: 5, z: 17, // Tu posición de cámara original
+        ease: "power3.inOut",
+      });
+    }
+  }, [isExploring, camera]);
+
+  return null;
 }
 
 function GyroCameraControl({ enabled }: { enabled: boolean }) {

@@ -66,23 +66,30 @@ export function FloatingWindows({ onShowCine, onShowAbout }: FloatingWindowsProp
   return (
     <>
       {/* IG Popup */}
-      <group position={[0, 0, 0]} rotation={[0, Math.PI / 6, 0]}>
+      <group position={[-15, 5, 35]} rotation={[0, 0, 0]} scale={0.7}>
         <Html
-          position={[-35, 0, 0]}
+          position={[0, 0, 0]}
           distanceFactor={70}
           transform
+          occlude
+          renderOrder={2}
+          style={{
+            transition: 'all 0.2s',
+            opacity: 1,
+            pointerEvents: 'auto'
+          }}
         >
-          <div style={{ textAlign: 'center', marginBottom: 8 }}>
+          <div style={{ textAlign: 'center', marginBottom: 17 }}>
             <span
               style={{
-                fontFamily: 'OptimusPrinceps, sans-serif',
-                fontSize: 36,
+                fontFamily: 'VT323, monospace',
+                fontSize: 30,
                 color: '#222',
                 letterSpacing: 1,
                 textShadow: '0 1px 6px #fff',
               }}
             >
-              Instagram
+              [IG]
             </span>
           </div>
           <a
@@ -106,17 +113,24 @@ export function FloatingWindows({ onShowCine, onShowAbout }: FloatingWindowsProp
       </group>
 
       {/* Virus Popup */}
-      <group position={[68, 0, 0]} rotation={[0, -Math.PI / 9, 0]}>
+      <group position={[40, -10, 35]} rotation={[0, 0, 0]} scale={0.35}>
         <Html
-          position={[28, 8, 0]}
-          distanceFactor={60}
+          position={[-35, 0, 0]}
+          distanceFactor={70}
           transform
+          occlude
+          renderOrder={2}
+          style={{
+            transition: 'all 0.2s',
+            opacity: 1,
+            pointerEvents: 'auto'
+          }}
         >
           <div style={{ textAlign: 'center', marginBottom: 8 }}>
             <span
               style={{
-                fontFamily: 'OptimusPrinceps, sans-serif',
-                fontSize: 36,
+                fontFamily: 'VT323, monospace',
+                fontSize: 42,
                 color: '#222',
                 letterSpacing: 1,
                 textShadow: '0 1px 6px #fff',
@@ -143,18 +157,24 @@ export function FloatingWindows({ onShowCine, onShowAbout }: FloatingWindowsProp
 
       {/* Windows Media Player Popup */}
 
-      <group position={[16, 1, -50]} rotation={[0, -Math.PI / 18, 0]}>
+      <group position={[20, 13, 38]} rotation={[0, -Math.PI / 18, 0]} scale={0.4}>
         <Html
-          position={[50, -7, 0]}
-          distanceFactor={63}
-          
+          position={[28, 8, 0]}
+          distanceFactor={60}
           transform
+          occlude
+          renderOrder={2}
+          style={{
+            transition: 'all 0.2s',
+            opacity: 1,
+            pointerEvents: 'auto'
+          }}
         >
           <div style={{ textAlign: 'center', marginBottom: 8 }}>
             <span
               style={{
-                fontFamily: 'OptimusPrinceps, sans-serif',
-                fontSize: 36,
+                fontFamily: 'VT323, monospace',
+                fontSize: 42,
                 color: '#222',
                 letterSpacing: 1,
                 textShadow: '0 1px 6px #fff',

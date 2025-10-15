@@ -1,0 +1,152 @@
+.pc-desktop {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 90vh;
+  background: #222222;
+  border: 2px solid #444444;
+  box-shadow: inset -1px -1px #111111, inset 1px 1px #666666;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  overflow: hidden;
+  backdrop-filter: grayscale(100%);
+}
+
+.top-bar {
+  background: linear-gradient(90deg, #111111, #333333);
+  color: #ffffff;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'VT323', monospace;
+}
+
+.window-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.close-button {
+  background: #444444;
+  border: 1px solid #666666;
+  border-radius: 2px;
+  box-shadow: inset -1px -1px #222222, inset 1px 1px #888888;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.close-button:active {
+  box-shadow: inset 1px 1px #222222, inset -1px -1px #888888;
+  background: #333333;
+}
+
+.desktop-icons {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid transparent;
+  width: 80px;
+  text-align: center;
+  transition: background-color 0.2s;
+  margin-left: 12px;
+}
+
+.icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+}
+
+.icon img {
+  width: auto;
+  height: 48px;
+  margin-bottom: 8px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(1.2) contrast(1.1);
+  transition: filter 0.2s ease;
+}
+
+.icon:hover img {
+  filter: grayscale(100%) brightness(1.4) contrast(1.2);
+}
+
+/* Ajustes específicos para cada icono */
+[alt="AR Experience"] {
+  height: 48px;
+  width: 28px; /* Mantiene la proporción 154:259 */
+}
+
+[alt="VR Experience"] {
+  height: 30px; /* Más pequeño para compensar el ancho */
+  width: 48px; /* Mantiene la proporción 268:168 */
+}
+
+.icon p {
+  color: white;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  margin: 0;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  word-break: break-word;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.video-gallery,
+.ai-chat-box {
+  background: #333333;
+  border: 2px solid #444444;
+  box-shadow: inset -1px -1px #222222, inset 1px 1px #666666;
+  padding: 20px;
+  width: 80%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  color: #ffffff;
+}
+
+.video-gallery h2,
+.ai-chat-box h2 {
+  margin-top: 0;
+  font-family: 'VT323', monospace;
+  color: #000080;
+}
+
+/* Añade efectos de hover para elementos interactivos */
+.icon:active {
+  background: rgba(255, 255, 255, 0.2);
+}

@@ -54,16 +54,16 @@ const styles = {
   } as React.CSSProperties,
   content: {
     color: '#EAEAEA',
-    fontFamily: "'OptimusPrinceps', serif",
+    fontFamily: "'VT323', monospace",
   } as React.CSSProperties,
   title: {
-    fontFamily: "'OptimusPrincepsSemiBold', serif",
-    fontSize: '28px',
+    fontFamily: "'VT323', monospace",
+    fontSize: '32px',
     margin: '0 0 1rem 0',
     color: 'white',
   } as React.CSSProperties,
   text: {
-    fontSize: '16px',
+    fontSize: '20px',
     lineHeight: '1.6',
   } as React.CSSProperties
 };
