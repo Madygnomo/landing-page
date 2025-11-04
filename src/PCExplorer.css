@@ -116,13 +116,59 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1000;
+  align-items: center;
+  z-index: 1000; /* Encima de todo */
+}
+
+/* El contenedor que tendrá la forma de "teléfono" para los reels */
+.reels-modal-container {
+  width: 360px; /* Ancho típico de un móvil */
+  height: 90vh; /* 90% de la altura de la pantalla */
+  max-height: 750px;
+  background: #000;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden; /* Clave para que los videos se corten en los bordes redondeados */
+}
+
+/* Botón para cerrar la ventana de Reels */
+.reels-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1001; /* Encima del contenido de video */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 2px 0;
+}
+
+.reels-modal-close:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Estilo para el placeholder de VR/AI (puedes borrarlo si no lo usas) */
+.video-gallery-placeholder {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
 }
 
 .video-gallery,

@@ -62,7 +62,7 @@ function GyroPermissionButton({ onGranted }: { onGranted: () => void }) {
       onClick={requestPermission}
       style={{
         position: 'fixed',
-        bottom: '20px',
+        top: '20px',
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 100000,
@@ -179,7 +179,7 @@ export default function App(): React.JSX.Element {
               polar={[0, 0.2]}
               azimuth={[-1, 0.75]}
             >
-              <group position={[1, 2, -1]} scale={0.2}>
+              <group position={[1, 3, -1]} scale={0.2}>
                 <Center>
                   <BottleWater />
                   <OldMonitor onClick={() => setExploringPC(true)} />
@@ -330,12 +330,17 @@ function OldMonitor(props: OldMonitorProps): React.JSX.Element {
         rotation={[0, 0, 0]}
         scale={1}
         renderOrder={-1}
+        raycast={undefined}
         onClick={(e) => {
           e.stopPropagation();
           if (props.onClick) props.onClick();
         }}
-        onPointerOver={() => document.body.style.cursor = 'pointer'}
-        onPointerOut={() => document.body.style.cursor = 'default'}
+        onPointerOver={() => {
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={() => {
+          document.body.style.cursor = 'default';
+        }}
       />
     </group>
   )
