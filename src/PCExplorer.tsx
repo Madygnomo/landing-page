@@ -23,7 +23,7 @@ export function PCExplorer({ onClose }: PCExplorerProps) {
           <p>AR.exe</p>
         </div>
 
-        <div className="icon" onClick={() => setOpenFolder('VR')}>
+        <div className="icon" onClick={() => window.open("https://journey-ch1.madygnome.com.co/", "_self")}>
           <img src="/Gnome_Icon.png" alt="Gnome Adventure.exe" />
           <p>gnome adventure.exe</p>
         </div>

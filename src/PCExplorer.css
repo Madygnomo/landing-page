@@ -13,6 +13,7 @@
   border-radius: 4px;
   overflow: hidden;
   backdrop-filter: grayscale(100%);
+  cursor: url('/danceeye-dancingeye.gif'), auto; /* Cambia el cursor a danceeye-dancingeye.gif */
 }
 
 .top-bar {
@@ -98,7 +99,7 @@
   width: 28px; /* Mantiene la proporción 154:259 */
 }
 
-[alt="VR Experience"] {
+[alt="Gnome Adventure"] {
   height: 30px; /* Más pequeño para compensar el ancho */
   width: 48px; /* Mantiene la proporción 268:168 */
 }
