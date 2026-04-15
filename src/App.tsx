@@ -38,7 +38,6 @@ useGLTF.preload("/OldPC_Mouse.glb");
 export default function App(): React.JSX.Element {
   const [showCine, setShowCine] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [isExploringPC, setExploringPC] = useState(false);
 
   const { bgColor } = useControls({
@@ -91,14 +90,6 @@ export default function App(): React.JSX.Element {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
-
-  // Detectar si es un dispositivo móvil
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   return (
     <>
