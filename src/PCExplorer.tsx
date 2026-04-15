@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import './PCExplorer.css';
-import VideoReels from './VideoReels'; // 1. Importa el componente de scrolling
+import VideoReels from './VideoReels';
 
 interface PCExplorerProps {
   onClose: () => void;
 }
 
-// 2. Ya no necesitamos 'VideoGallery' ni 'VideoGalleryProps', los eliminamos.
-
 export function PCExplorer({ onClose }: PCExplorerProps) {
-  const [openFolder, setOpenFolder] = useState<string | null>(null); // 'AR', 'AI', o 'VR'
+  const [openFolder, setOpenFolder] = useState<string | null>(null); 
 
   return (
     <div className="pc-desktop">
@@ -26,13 +24,13 @@ export function PCExplorer({ onClose }: PCExplorerProps) {
         </div>
 
         <div className="icon" onClick={() => setOpenFolder('VR')}>
-          <img src="/Icono_VR.png" alt="VR Experience" />
-          <p>VR.exe</p>
+          <img src="/Gnome_Icon.png" alt="Gnome Adventure.exe" />
+          <p>gnome adventure.exe</p>
         </div>
 
         <div className="icon" onClick={() => setOpenFolder('AI')}>
-          <img src="/Icono_Banana.png" alt="AI Experience" />
-          <p>AI.exe</p>
+          <img src="/poems_icon.png" alt="net narratives.exe" />
+          <p>net narratives.exe</p>
         </div>
       </div>
 

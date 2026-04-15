@@ -80,9 +80,7 @@ export const AboutMe: FC<AboutMeProps> = ({ onClose }) => {
         <div style={styles.content}>
           <h2 style={styles.title}>About Me</h2>
           <p style={styles.text}>
-            I turn code into worlds and pixels into experiences.
-            <br /><br />
-            My journey as a Motion Designer taught me how to tell stories visually. Now, as a Digital Creator, I use technology as my canvas. My toolkit includes everything from traditional animation software to cutting-edge development platforms like Unity, Spark AR, and Effect House.
+            Hello. My name is Camilo Adams for humans, but on the web I prefer to go by Gnome, gnomito, gnomo, or gnomote, I'm a gnome inventor. Your are welcome to explore my works. If you want explore my world, Touch the pc screen.
           </p>
         </div>
       </div>
