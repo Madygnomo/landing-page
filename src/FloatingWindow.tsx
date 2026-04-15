@@ -205,7 +205,7 @@ export function FloatingWindows({ onShowCine, onShowAbout }: FloatingWindowsProp
 
       {/* Countdown Window */}
       {/* This is now a 3D object, so it will be affected by post-processing */}
-      <group position={[-15, -10, 35]} rotation={[0, 0.1, 0]} scale={1.2}>
+      <group position={[-15, 22, 35]} rotation={[0, 0.1, 0]} scale={1.2}>
         <CountdownWindow />
       </group>
 
