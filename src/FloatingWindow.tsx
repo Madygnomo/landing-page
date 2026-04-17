@@ -28,9 +28,7 @@ function useGlitch(intensity = 1) {
 
 const CountdownWindow: FC = () => {
   const [targetDate] = useState(() => {
-    const date = new Date();
-    date.setMonth(date.getMonth() + 1);
-    return date;
+    return new Date('2026-05-14T00:00:00');
   });
 
   const [timeLeft, setTimeLeft] = useState('Loading...');
@@ -95,7 +93,7 @@ const CountdownWindow: FC = () => {
         anchorX="center"
         anchorY="middle"
       >
-        1 MONTH TO KILL THIS SHIT
+        TIME UNTIL SHUTDOWN
       </Text>
 
       {/* Countdown display */}

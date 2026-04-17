@@ -28,7 +28,7 @@ export function PCExplorer({ onClose }: PCExplorerProps) {
           <p>gnome adventure.exe</p>
         </div>
 
-        <div className="icon" onClick={() => setOpenFolder('AI')}>
+        <div className="icon" onClick={() => setOpenFolder('net narratives')}>
           <img src="/poems_icon.png" alt="net narratives.exe" />
           <p>net narratives.exe</p>
         </div>
