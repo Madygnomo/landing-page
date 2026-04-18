@@ -32,6 +32,11 @@ export function PCExplorer({ onClose }: PCExplorerProps) {
           <img src="/poems_icon.png" alt="net narratives.exe" />
           <p>net narratives.exe</p>
         </div>
+
+        <div className="icon" onClick={() => window.open("https://madygnomo.github.io/proyecto_bio_mediapipe/", "_self")}>
+          <img src="/Gato.gif" alt="Bio MediaPipe.exe" />
+          <p>bio mediapipe.exe</p>
+        </div>
       </div>
 
       {/* 4. Lógica de las ventanas modales modificada */}
